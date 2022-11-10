@@ -15,6 +15,7 @@ ENV CONF_DIR "$APP_DIR/conf"
 # Update base system
 # hadolint ignore=DL3018,DL3009,DL3008
 RUN apt-get update \
+  && apt-get upgrade \
   && apt-get install -y --no-install-recommends ca-certificates \
   && apt-get clean \
   && find / -xdev -name '*apt*' -print0 | xargs rm -rf

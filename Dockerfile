@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:11.5-slim
 
 # make a pipe fail on the first failure
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -44,6 +44,9 @@ RUN find / -xdev -type d -perm /0002 -exec chmod o-w {} + \
 # Remove unnecessary accounts, excluding current app user and root
 RUN sed -i -r "/^($APP_USER|root|nobody)/!d" /etc/group \
   && sed -i -r "/^($APP_USER|root|nobody)/!d" /etc/passwd
+  
+# Remove documentation folder
+RUN rm -rf /usr/share/doc/
 
 # Remove interactive login shell for everybody
 RUN sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
